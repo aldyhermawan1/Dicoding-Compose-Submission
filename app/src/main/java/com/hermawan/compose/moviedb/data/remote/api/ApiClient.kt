@@ -8,6 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiClient {
+
     @GET("tv/top_rated/$API_KEY&page=1")
     suspend fun getTopRated(): List<SeriesResponse>
 

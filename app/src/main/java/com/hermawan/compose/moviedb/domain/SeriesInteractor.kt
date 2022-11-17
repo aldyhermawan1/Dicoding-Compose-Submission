@@ -5,7 +5,7 @@ import com.hermawan.compose.moviedb.data.Resource
 import com.hermawan.compose.moviedb.domain.model.Series
 import kotlinx.coroutines.flow.Flow
 
-class SeriesInteractor(private val seriesRepository: ISeriesRepository): SeriesUseCase {
+class SeriesInteractor(private val seriesRepository: ISeriesRepository) : SeriesUseCase {
 
     override fun getTopRated(): Flow<Resource<List<Series>>> {
         return seriesRepository.getTopRated()

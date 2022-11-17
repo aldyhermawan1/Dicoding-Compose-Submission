@@ -1,7 +1,6 @@
 package com.hermawan.compose.moviedb
 
-import org.junit.Test
-
+import org.junit.*
 import org.junit.Assert.*
 
 /**

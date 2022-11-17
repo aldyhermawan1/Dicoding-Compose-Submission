@@ -9,5 +9,6 @@ import com.hermawan.compose.moviedb.data.local.model.SeriesEntity
     exportSchema = false
 )
 abstract class SeriesDatabase : RoomDatabase() {
+
     abstract fun seriesDao(): SeriesDao
 }

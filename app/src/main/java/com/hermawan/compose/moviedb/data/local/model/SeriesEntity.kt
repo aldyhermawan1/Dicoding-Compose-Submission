@@ -32,6 +32,7 @@ data class SeriesEntity(
     @ColumnInfo(name = "name")
     val name: String,
 ) {
+
     fun toDomain(): Series {
         return Series(
             id = id,
