@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class Series(
 
     val backdropPath: String?,
-    val firstAirDate: String,
+    val firstAirDate: String?,
     val id: Int,
     val lastAirDate: String? = null,
     val name: String,

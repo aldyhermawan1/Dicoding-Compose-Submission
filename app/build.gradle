@@ -9,6 +9,9 @@ android {
     namespace 'com.hermawan.compose.moviedb'
     compileSdk 33
 
+    def localProperties = new Properties()
+    localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
     defaultConfig {
         applicationId "com.hermawan.compose.moviedb"
         minSdk 21
@@ -22,9 +25,9 @@ android {
         }
 
         buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
-        buildConfigField "String", "BASE_IMAGE_URL", "\"https://image.tmdb.org/t/p/w500/\""
-        buildConfigField "String", "API_KEY", "\"869610c1cc732fd80096a7f46f6c851d\""
-        buildConfigField "String", "DB_KEY", "\"aldykey\""
+        buildConfigField "String", "BASE_IMAGE_URL", "\"https://image.tmdb.org/t/p/w500\""
+        buildConfigField "String", "API_KEY", localProperties['apiKey']
+        buildConfigField "String", "DB_KEY", localProperties['dbKey']
     }
 
     buildTypes {
@@ -66,6 +69,16 @@ dependencies {
 
     //Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    //Async Image
+    implementation "io.coil-kt:coil-compose:2.2.0"
+
+    //LiveData Compose
+    implementation 'androidx.compose.runtime:runtime-livedata:1.4.0-alpha02'
+
+    //Accompanist
+    implementation "com.google.accompanist:accompanist-pager:0.25.0"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.25.0"
 
     //Koin
     implementation 'io.insert-koin:koin-core:3.2.2'

@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Compose MovieDB</string>
+
+    <string name="message_empty_search">Sorry, We couldn\'t find your Series :(</string>
+    <string name="message_empty_favorite">You haven\'t add any favorite series yet</string>
+
+    <string name="image_empty">Empty Image</string>
+    <string name="label_search">Series\' Name</string>
+
+    <string name="title_popular">Popular</string>
+    <string name="title_detail">Detail</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_about">About</string>
 </resources>

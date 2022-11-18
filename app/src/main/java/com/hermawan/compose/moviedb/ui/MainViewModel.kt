@@ -3,87 +3,64 @@ package com.hermawan.compose.moviedb.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.hermawan.compose.moviedb.data.Resource
 import com.hermawan.compose.moviedb.domain.SeriesUseCase
 import com.hermawan.compose.moviedb.domain.model.Series
-import com.hermawan.compose.moviedb.utils.ResultData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class MainViewModel(private val useCase: SeriesUseCase) : ViewModel() {
 
-    private val _topRated = MutableLiveData<ResultData<List<Series>>>()
-    val topRated: LiveData<ResultData<List<Series>>> get() = _topRated
+    private val _series = MutableLiveData<Resource<List<Series>>>()
+    val series: LiveData<Resource<List<Series>>> get() = _series
 
-    private val _detail = MutableLiveData<ResultData<Series>>()
-    val detail: LiveData<ResultData<Series>> get() = _detail
+    private val _detailSeries = MutableLiveData<Resource<Series>>()
+    val detailSeries: LiveData<Resource<Series>> get() = _detailSeries
 
-    private val _search = MutableLiveData<ResultData<List<Series>>>()
-    val search: LiveData<ResultData<List<Series>>> get() = _search
+    private val _favoriteSeries = MutableLiveData<List<Series>>()
+    val favoriteSeries: LiveData<List<Series>> get() = _favoriteSeries
 
-    private val _favorites = MutableLiveData<ResultData<List<Series>>>()
-    val favorites: LiveData<ResultData<List<Series>>> get() = _favorites
+    private val _isFavorite = MutableLiveData<Boolean>()
+    val isFavorite: LiveData<Boolean> get() = _isFavorite
 
-    private val _isFavorite = MutableLiveData<ResultData<Boolean>>()
-    val isFavorite: LiveData<ResultData<Boolean>> get() = _isFavorite
-
-    init {
-        _topRated.value = ResultData.Default()
-        _detail.value = ResultData.Default()
-        _search.value = ResultData.Default()
-        _favorites.value = ResultData.Default()
-        _isFavorite.value = ResultData.Default()
-    }
-
-    fun getTopRated() {
-        _topRated.value = ResultData.Loading()
-
-        useCase.getTopRated().map {
-            _topRated.value = if (it.isNotEmpty()) ResultData.Success(it) else ResultData.Empty()
-        }.catch {
-            _topRated.value = ResultData.Error(it.message)
+    fun getPopular() {
+        viewModelScope.launch {
+            useCase.getPopular().collect {
+                _series.value = it
+            }
         }
     }
 
     fun getDetail(id: Int) {
-        _detail.value = ResultData.Loading()
-
-        useCase.getDetail(id).map {
-            _detail.value = ResultData.Success(it)
-        }.catch {
-            _detail.value = ResultData.Error(it.message)
-        }.flowOn(Dispatchers.Main)
+        viewModelScope.launch {
+            useCase.getDetail(id).collect {
+                _detailSeries.value = it
+            }
+        }
     }
 
     fun getSearch(query: String) {
-        _search.value = ResultData.Loading()
-
-        useCase.getSearch(query).map {
-            _search.value = if (it.isNotEmpty()) ResultData.Success(it) else ResultData.Empty()
-        }.catch {
-            _search.value = ResultData.Error(it.message)
-        }.flowOn(Dispatchers.Main)
+        viewModelScope.launch {
+            useCase.getSearch(query).collect {
+                _series.value = it
+            }
+        }
     }
 
     fun getFavorites() {
-        _favorites.value = ResultData.Loading()
-
-        useCase.getFavorites().map {
-            _favorites.value = if (it.isNotEmpty()) ResultData.Success(it) else ResultData.Empty()
-        }.catch {
-            _favorites.value = ResultData.Error(it.message)
-        }.flowOn(Dispatchers.Main)
+        viewModelScope.launch {
+            useCase.getFavorites().collect {
+                _favoriteSeries.value = it
+            }
+        }
     }
 
     fun isFavorite(id: Int) {
-        _isFavorite.value = ResultData.Loading()
-
-        useCase.isFavorite(id).map {
-            _isFavorite.value = ResultData.Success(it)
-        }.catch {
-            _isFavorite.value = ResultData.Error(it.message)
-        }.flowOn(Dispatchers.Main)
+        viewModelScope.launch {
+            useCase.isFavorite(id).collect {
+                _isFavorite.value = it
+            }
+        }
     }
 
     fun insertFavorite(series: Series) {

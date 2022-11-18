@@ -27,7 +27,7 @@ data class SeriesEntity(
     val overview: String,
 
     @ColumnInfo(name = "first_air_date")
-    val firstAirDate: String,
+    val firstAirDate: String?,
 
     @ColumnInfo(name = "name")
     val name: String,

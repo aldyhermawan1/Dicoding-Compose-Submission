@@ -2,6 +2,7 @@ package com.hermawan.compose.moviedb.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 import com.hermawan.compose.moviedb.domain.model.Series
+import com.hermawan.compose.moviedb.utils.Constants.BASE_IMAGE_URL
 
 data class SeriesResponse(
 
@@ -24,7 +25,7 @@ data class SeriesResponse(
     val overview: String,
 
     @field:SerializedName("first_air_date")
-    val firstAirDate: String,
+    val firstAirDate: String?,
 
     @field:SerializedName("name")
     val name: String,
@@ -32,10 +33,10 @@ data class SeriesResponse(
 
     fun toDomain(): Series {
         return Series(
-            posterPath = posterPath,
+            posterPath = BASE_IMAGE_URL + posterPath,
             popularity = popularity,
             id = id,
-            backdropPath = backdropPath,
+            backdropPath = BASE_IMAGE_URL + backdropPath,
             voteAverage = voteAverage,
             overview = overview,
             firstAirDate = firstAirDate,

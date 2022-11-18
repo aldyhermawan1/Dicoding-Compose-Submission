@@ -10,12 +10,12 @@ import retrofit2.http.Query
 
 interface ApiClient {
 
-    @GET("tv/top_rated?api_key=$API_KEY&language=en-US&page=1")
-    suspend fun getTopRated(): ResultResponse<List<SeriesResponse>>
+    @GET("tv/popular?api_key=$API_KEY&language=en-US&page=1")
+    suspend fun getPopular(): ResultResponse<List<SeriesResponse>>
 
     @GET("tv/{id}?api_key=$API_KEY&language=en-US")
     suspend fun getDetail(@Path("id") id: Int): DetailSeriesResponse
 
-    @GET("search/tv?api_key$API_KEY&language=en-US&page=1")
+    @GET("search/tv?api_key=$API_KEY&language=en-US&page=1")
     suspend fun getSeries(@Query("query") query: String): ResultResponse<List<SeriesResponse>>
 }

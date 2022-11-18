@@ -2,6 +2,7 @@ package com.hermawan.compose.moviedb.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 import com.hermawan.compose.moviedb.domain.model.Series
+import com.hermawan.compose.moviedb.utils.Constants
 
 data class DetailSeriesResponse(
 
@@ -38,7 +39,16 @@ data class DetailSeriesResponse(
 
     fun toDomain(): Series {
         return Series(
-            backdropPath, firstAirDate, id, lastAirDate, name, numberOfEpisodes, overview, popularity, posterPath, voteAverage
+            Constants.BASE_IMAGE_URL + backdropPath,
+            firstAirDate,
+            id,
+            lastAirDate,
+            name,
+            numberOfEpisodes,
+            overview,
+            popularity,
+            Constants.BASE_IMAGE_URL + posterPath,
+            voteAverage
         )
     }
 }

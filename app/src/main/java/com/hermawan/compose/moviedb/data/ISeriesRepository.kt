@@ -1,18 +1,16 @@
 package com.hermawan.compose.moviedb.data
 
-import com.hermawan.compose.moviedb.data.local.model.SeriesEntity
-import com.hermawan.compose.moviedb.data.remote.model.DetailSeriesResponse
-import com.hermawan.compose.moviedb.data.remote.model.SeriesResponse
+import com.hermawan.compose.moviedb.domain.model.Series
 import kotlinx.coroutines.flow.Flow
 
 interface ISeriesRepository {
 
-    fun getTopRated(): Flow<List<SeriesResponse>>
-    fun getDetail(id: Int): Flow<DetailSeriesResponse>
-    fun getSeries(query: String): Flow<List<SeriesResponse>>
+    fun getPopular(): Flow<Resource<List<Series>>>
+    fun getDetail(id: Int): Flow<Resource<Series>>
+    fun getSeries(query: String): Flow<Resource<List<Series>>>
 
-    fun getFavorites(): Flow<List<SeriesEntity>>
+    fun getFavorites(): Flow<List<Series>>
     fun isFavorite(id: Int): Flow<Boolean>
-    fun insertFavorite(series: SeriesEntity)
-    fun deleteFavorite(series: SeriesEntity)
+    fun insertFavorite(series: Series)
+    fun deleteFavorite(series: Series)
 }
