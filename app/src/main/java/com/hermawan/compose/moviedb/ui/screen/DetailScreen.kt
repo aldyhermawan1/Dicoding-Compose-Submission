@@ -45,7 +45,6 @@ import com.hermawan.compose.moviedb.ui.theme.ComposeMovieDBTheme
 import com.hermawan.compose.moviedb.ui.theme.DarkBlue
 import com.hermawan.compose.moviedb.utils.changeDateFormat
 import org.koin.androidx.compose.koinViewModel
-import timber.log.Timber
 
 @Composable
 fun DetailScreen(
@@ -90,15 +89,7 @@ fun DetailContent(
     modifier: Modifier = Modifier,
     viewModel: MainViewModel = koinViewModel(),
 ) {
-    val isFavorite by viewModel.isFavorite.observeAsState()
-    when (isFavorite) {
-        true -> Timber.d("TRUE")
-        false -> Timber.d("FALSE")
-        null -> {
-            Timber.d("NULL")
-            viewModel.checkFavorite(detailSeries.id)
-        }
-    }
+    viewModel.checkFavorite(detailSeries.id)
 
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
@@ -124,7 +115,7 @@ fun DetailContent(
             }
             FloatingActionButton(
                 onClick = {
-                    if (isFavorite == true) {
+                    if (viewModel.isFavorite) {
                         viewModel.deleteFavorite(detailSeries)
                     } else {
                         viewModel.insertFavorite(detailSeries)
@@ -138,7 +129,7 @@ fun DetailContent(
                     .padding(top = 16.dp, end = 16.dp)
             ) {
                 Icon(
-                    imageVector = if (isFavorite == true) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    imageVector = if (viewModel.isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                     contentDescription = stringResource(id = R.string.action_back)
                 )
             }

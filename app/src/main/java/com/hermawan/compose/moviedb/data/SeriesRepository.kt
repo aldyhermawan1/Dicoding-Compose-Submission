@@ -6,11 +6,9 @@ import com.hermawan.compose.moviedb.data.remote.api.ApiResponse
 import com.hermawan.compose.moviedb.data.remote.model.DetailSeriesResponse
 import com.hermawan.compose.moviedb.data.remote.model.SeriesResponse
 import com.hermawan.compose.moviedb.domain.model.Series
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 class SeriesRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -53,23 +51,23 @@ class SeriesRepository(
         }.asFlow()
     }
 
-    override suspend fun getFavorites(): Flow<List<Series>> = withContext(Dispatchers.IO) {
-        localDataSource.getFavorites().map {
+    override suspend fun getFavorites(): Flow<List<Series>> {
+        return localDataSource.getFavorites().map {
             it.map { entity ->
                 entity.toDomain()
             }
         }
     }
 
-    override suspend fun isFavorite(id: Int): Flow<Boolean> = withContext(Dispatchers.IO) {
-        localDataSource.isFavorite(id).map { it }
+    override suspend fun isFavorite(id: Int): Flow<Boolean> {
+        return localDataSource.isFavorite(id)
     }
 
-    override suspend fun insertFavorite(series: Series) = withContext(Dispatchers.IO) {
+    override suspend fun insertFavorite(series: Series) {
         localDataSource.insertFavorite(series.toEntity())
     }
 
-    override suspend fun deleteFavorite(series: Series) = withContext(Dispatchers.IO) {
+    override suspend fun deleteFavorite(series: Series) {
         localDataSource.deleteFavorite(series.toEntity())
     }
 }

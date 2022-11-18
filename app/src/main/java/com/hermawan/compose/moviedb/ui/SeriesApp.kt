@@ -57,7 +57,9 @@ fun SeriesApp(
                 })
             }
             composable(Screen.Favorite.route) {
-                FavoriteScreen()
+                FavoriteScreen(onNavigateDetail = {
+                    navController.navigate(Screen.Detail.createRoute(it))
+                })
             }
             composable(
                 route = Screen.Detail.route,

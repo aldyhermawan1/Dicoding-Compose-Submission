@@ -30,7 +30,8 @@ val databaseModule = module {
             androidContext(),
             SeriesDatabase::class.java,
             "Series.db"
-        ).fallbackToDestructiveMigration()
+        )
+            .fallbackToDestructiveMigration()
             //.openHelperFactory(factory)
             .build()
     }

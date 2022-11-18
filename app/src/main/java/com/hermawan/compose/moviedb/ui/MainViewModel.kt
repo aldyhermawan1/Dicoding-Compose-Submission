@@ -1,5 +1,8 @@
 package com.hermawan.compose.moviedb.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.hermawan.compose.moviedb.data.Resource
 import com.hermawan.compose.moviedb.domain.SeriesUseCase
 import com.hermawan.compose.moviedb.domain.model.Series
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val useCase: SeriesUseCase) : ViewModel() {
@@ -17,11 +21,9 @@ class MainViewModel(private val useCase: SeriesUseCase) : ViewModel() {
     private val _detailSeries = MutableLiveData<Resource<Series>>()
     val detailSeries: LiveData<Resource<Series>> get() = _detailSeries
 
-    private val _favoriteSeries = MutableLiveData<List<Series>>()
-    val favoriteSeries: LiveData<List<Series>> get() = _favoriteSeries
+    var favoriteSeries by mutableStateOf(emptyList<Series>())
 
-    private val _isFavorite = MutableLiveData<Boolean>()
-    val isFavorite: LiveData<Boolean> get() = _isFavorite
+    var isFavorite by mutableStateOf(false)
 
     fun getPopular() {
         viewModelScope.launch {
@@ -50,7 +52,7 @@ class MainViewModel(private val useCase: SeriesUseCase) : ViewModel() {
     fun getFavorites() {
         viewModelScope.launch {
             useCase.getFavorites().collect {
-                _favoriteSeries.value = it
+                favoriteSeries = it
             }
         }
     }
@@ -58,19 +60,19 @@ class MainViewModel(private val useCase: SeriesUseCase) : ViewModel() {
     fun checkFavorite(id: Int) {
         viewModelScope.launch {
             useCase.isFavorite(id).collect {
-                _isFavorite.value = it
+                isFavorite = it
             }
         }
     }
 
     fun insertFavorite(series: Series) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             useCase.insertFavorite(series)
         }
     }
 
     fun deleteFavorite(series: Series) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             useCase.deleteFavorite(series)
         }
     }
