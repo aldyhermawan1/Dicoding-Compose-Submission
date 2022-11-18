@@ -14,7 +14,7 @@ data class Series(
     val name: String,
     val numberOfEpisodes: Int? = null,
     val overview: String,
-    val popularity: Int,
+    val popularity: Double,
     val posterPath: String?,
     val voteAverage: Double,
 ) : Parcelable {

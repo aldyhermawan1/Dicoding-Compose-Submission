@@ -27,7 +27,7 @@ data class DetailSeriesResponse(
     val overview: String,
 
     @field:SerializedName("popularity")
-    val popularity: Int,
+    val popularity: Double,
 
     @field:SerializedName("poster_path")
     val posterPath: String?,

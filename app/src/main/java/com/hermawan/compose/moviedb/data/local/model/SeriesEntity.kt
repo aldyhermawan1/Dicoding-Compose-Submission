@@ -15,7 +15,7 @@ data class SeriesEntity(
     val posterPath: String?,
 
     @ColumnInfo(name = "popularity")
-    val popularity: Int,
+    val popularity: Double,
 
     @ColumnInfo(name = "backdrop_path")
     val backdropPath: String?,

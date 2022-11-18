@@ -9,7 +9,7 @@ data class SeriesResponse(
     val posterPath: String?,
 
     @field:SerializedName("popularity")
-    val popularity: Int,
+    val popularity: Double,
 
     @field:SerializedName("id")
     val id: Int,

@@ -1,47 +1,12 @@
 package com.hermawan.compose.moviedb.data.remote
 
 import com.hermawan.compose.moviedb.data.remote.api.ApiClient
-import com.hermawan.compose.moviedb.data.remote.api.ApiResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource(private val apiClient: ApiClient) {
 
-    suspend fun getTopRated() =
-        flow {
-            try {
-                val response = apiClient.getTopRated()
-                if (response.isNotEmpty()) {
-                    emit(ApiResponse.Success(response))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
+    suspend fun getTopRated() = apiClient.getTopRated().data
 
-    suspend fun getDetail(id: Int) =
-        flow {
-            try {
-                emit(ApiResponse.Success(apiClient.getDetail(id)))
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
+    suspend fun getDetail(id: Int) = apiClient.getDetail(id)
 
-    suspend fun getSeries(query: String) =
-        flow {
-            try {
-                val response = apiClient.getSeries(query)
-                if (response.isNotEmpty()) {
-                    emit(ApiResponse.Success(response))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-            }
-        }.flowOn(Dispatchers.IO)
+    suspend fun getSeries(query: String) = apiClient.getSeries(query).data
 }

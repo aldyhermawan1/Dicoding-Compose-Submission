@@ -10,14 +10,15 @@ import com.hermawan.compose.moviedb.data.remote.RemoteDataSource
 import com.hermawan.compose.moviedb.data.remote.api.ApiClient
 import com.hermawan.compose.moviedb.domain.SeriesInteractor
 import com.hermawan.compose.moviedb.domain.SeriesUseCase
+import com.hermawan.compose.moviedb.ui.MainViewModel
 import com.hermawan.compose.moviedb.utils.Constants.BASE_URL
 import com.hermawan.compose.moviedb.utils.Constants.DB_KEY
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
-import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -40,13 +41,13 @@ val databaseModule = module {
 
 val networkModule = module {
     single {
-        val hostname = BASE_URL
+        /*val hostname = BASE_URL
         val certificatePinner = CertificatePinner.Builder()
             .add(hostname, "sha256/p+WeEuGncQbjSKYPSzAaKpF/iLcOjFLuZubtsXupYSI=")
             .add(hostname, "sha256/JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=")
             .add(hostname, "sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI=")
             .add(hostname, "sha256/KwccWaCgrnaw6tsrrSO61FgLacNgG2MMLq8GE6+oP5I=")
-            .build()
+            .build()*/
         OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor().setLevel(
@@ -57,7 +58,7 @@ val networkModule = module {
             )
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
-            .certificatePinner(certificatePinner)
+            //.certificatePinner(certificatePinner)
             .build()
     }
     single {
@@ -81,5 +82,5 @@ val useCaseModule = module {
 }
 
 val viewModelModule = module {
-
+    viewModel { MainViewModel(get()) }
 }
