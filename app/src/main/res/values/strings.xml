@@ -5,9 +5,12 @@
     <string name="app_name">Compose MovieDB</string>
 
     <string name="content_air_date">%s - %s</string>
+    <string name="content_name">Muhammad Reinaldy Hermawan</string>
+    <string name="content_email">aldyjonkunimen@gmail.com</string>
 
     <string name="image_empty">Empty Image</string>
     <string name="image_logo">Logo</string>
+    <string name="image_about">About Image</string>
 
     <string name="label_search">Series\' Name</string>
     <string name="label_air_date">Air Date</string>
@@ -16,6 +19,11 @@
     <string name="message_empty_favorite">You haven\'t add any favorite series yet</string>
     <string name="message_empty_search">Sorry, We couldn\'t find your Series :(</string>
     <string name="message_error">Oops.. Something went wrong</string>
+
+    <string name="page_about">about_page</string>
+    <string name="page_detail">detail_page</string>
+    <string name="page_favorite">favorite_page</string>
+    <string name="page_popular">popular_page</string>
 
     <string name="title_about">About</string>
     <string name="title_detail">Detail</string>

@@ -47,7 +47,7 @@ fun TopBar(
         actions = {
             if (isAboutVisible) {
                 IconButton(onClick = { onAboutClick() }) {
-                    Icon(imageVector = Icons.Default.Person, contentDescription = stringResource(id = R.string.title_about))
+                    Icon(imageVector = Icons.Default.Person, contentDescription = stringResource(id = R.string.page_about))
                 }
             }
         },
