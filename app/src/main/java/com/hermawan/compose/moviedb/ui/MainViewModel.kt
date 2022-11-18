@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.hermawan.compose.moviedb.data.Resource
 import com.hermawan.compose.moviedb.domain.SeriesUseCase
 import com.hermawan.compose.moviedb.domain.model.Series
+import com.hermawan.compose.moviedb.utils.EspressoIdlingResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -26,54 +27,68 @@ class MainViewModel(private val useCase: SeriesUseCase) : ViewModel() {
     var isFavorite by mutableStateOf(false)
 
     fun getPopular() {
+        EspressoIdlingResource.increment()
         viewModelScope.launch {
             useCase.getPopular().collect {
                 _series.value = it
             }
+            EspressoIdlingResource.decrement()
         }
     }
 
     fun getDetail(id: Int) {
+        EspressoIdlingResource.increment()
         viewModelScope.launch {
             useCase.getDetail(id).collect {
                 _detailSeries.value = it
             }
+            EspressoIdlingResource.decrement()
         }
     }
 
     fun getSearch(query: String) {
+        EspressoIdlingResource.increment()
         viewModelScope.launch {
             useCase.getSearch(query).collect {
                 _series.value = it
             }
+            EspressoIdlingResource.decrement()
         }
     }
 
     fun getFavorites() {
+        EspressoIdlingResource.increment()
         viewModelScope.launch {
             useCase.getFavorites().collect {
                 favoriteSeries = it
             }
+            EspressoIdlingResource.decrement()
         }
     }
 
     fun checkFavorite(id: Int) {
+        EspressoIdlingResource.increment()
         viewModelScope.launch {
             useCase.isFavorite(id).collect {
                 isFavorite = it
             }
+            EspressoIdlingResource.decrement()
         }
     }
 
     fun insertFavorite(series: Series) {
+        EspressoIdlingResource.increment()
         viewModelScope.launch(Dispatchers.IO) {
             useCase.insertFavorite(series)
+            EspressoIdlingResource.decrement()
         }
     }
 
     fun deleteFavorite(series: Series) {
+        EspressoIdlingResource.increment()
         viewModelScope.launch(Dispatchers.IO) {
             useCase.deleteFavorite(series)
+            EspressoIdlingResource.decrement()
         }
     }
 }

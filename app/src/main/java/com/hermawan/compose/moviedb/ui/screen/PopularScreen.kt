@@ -91,7 +91,8 @@ fun PopularContent(
                 vote = it.voteAverage,
                 onClickListener = { id ->
                     onNavigateDetail(id)
-                }
+                },
+                modifier = Modifier.testTag("PopularItem")
             )
         }
     }

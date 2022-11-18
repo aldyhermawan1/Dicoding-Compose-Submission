@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment.Companion
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -43,6 +44,7 @@ import com.hermawan.compose.moviedb.ui.components.GenericState
 import com.hermawan.compose.moviedb.ui.components.VoteLabel
 import com.hermawan.compose.moviedb.ui.theme.ComposeMovieDBTheme
 import com.hermawan.compose.moviedb.ui.theme.DarkBlue
+import com.hermawan.compose.moviedb.utils.EspressoIdlingResource
 import com.hermawan.compose.moviedb.utils.changeDateFormat
 import org.koin.androidx.compose.koinViewModel
 
@@ -65,7 +67,7 @@ fun DetailScreen(
                 GenericState(message = stringResource(id = R.string.message_error), drawable = R.drawable.img_error)
             }
             is Error -> {
-                GenericState(message = state?.message.toString(), drawable = R.drawable.img_error)
+                GenericState(message = stringResource(id = R.string.message_error), drawable = R.drawable.img_error)
             }
             is Loading -> {
                 CircularProgressIndicator(
@@ -74,6 +76,7 @@ fun DetailScreen(
             }
             is Success -> {
                 DetailContent(detailSeries = state?.data!!, navigateBack = navigateBack)
+                EspressoIdlingResource.decrement()
             }
             else -> {
                 viewModel.getDetail(seriesId)
@@ -110,6 +113,7 @@ fun DetailContent(
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(start = 16.dp, top = 16.dp)
+                    .testTag("BackButton")
             ) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.action_back))
             }
@@ -117,8 +121,10 @@ fun DetailContent(
                 onClick = {
                     if (viewModel.isFavorite) {
                         viewModel.deleteFavorite(detailSeries)
+                        EspressoIdlingResource.decrement()
                     } else {
                         viewModel.insertFavorite(detailSeries)
+                        EspressoIdlingResource.decrement()
                     }
                     viewModel.checkFavorite(detailSeries.id)
                 },
@@ -127,6 +133,7 @@ fun DetailContent(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(top = 16.dp, end = 16.dp)
+                    .testTag("FavoriteButton")
             ) {
                 Icon(
                     imageVector = if (viewModel.isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,

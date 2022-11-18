@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +34,10 @@ fun TopBar(
         contentColor = Color.White,
         navigationIcon = {
             if (isBackVisible) {
-                IconButton(onClick = { onBackClick() }) {
+                IconButton(
+                    onClick = { onBackClick() },
+                    modifier = Modifier.testTag("BackButton")
+                ) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.action_back))
                 }
             } else {

@@ -12,6 +12,9 @@ import com.hermawan.compose.moviedb.domain.SeriesInteractor
 import com.hermawan.compose.moviedb.domain.SeriesUseCase
 import com.hermawan.compose.moviedb.ui.MainViewModel
 import com.hermawan.compose.moviedb.utils.Constants.BASE_URL
+import com.hermawan.compose.moviedb.utils.Constants.DB_KEY
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -24,15 +27,15 @@ import java.util.concurrent.TimeUnit
 val databaseModule = module {
     factory { get<SeriesDatabase>().seriesDao() }
     single {
-        //val passphrase: ByteArray = SQLiteDatabase.getBytes(DB_KEY.toCharArray())
-        //val factory = SupportFactory(passphrase)
+        val passphrase: ByteArray = SQLiteDatabase.getBytes(DB_KEY.toCharArray())
+        val factory = SupportFactory(passphrase)
         Room.databaseBuilder(
             androidContext(),
             SeriesDatabase::class.java,
             "Series.db"
         )
             .fallbackToDestructiveMigration()
-            //.openHelperFactory(factory)
+            .openHelperFactory(factory)
             .build()
     }
 }
