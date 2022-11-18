@@ -7,19 +7,19 @@ import kotlinx.coroutines.flow.flow
 
 class LocalDataSource(private val seriesDao: SeriesDao) {
 
-    fun getFavorites(): Flow<List<SeriesEntity>> {
-        return seriesDao.getFavorites()
+    suspend fun getFavorites(): Flow<List<SeriesEntity>> {
+        return flow { seriesDao.getFavorites() }
     }
 
-    fun isFavorite(id: Int): Flow<Boolean> {
+    suspend fun isFavorite(id: Int): Flow<Boolean> {
         return flow { seriesDao.isFavorite(id).isNotEmpty() }
     }
 
-    fun insertFavorite(seriesEntity: SeriesEntity) {
+    suspend fun insertFavorite(seriesEntity: SeriesEntity) {
         seriesDao.insertFavorites(seriesEntity)
     }
 
-    fun deleteFavorite(seriesEntity: SeriesEntity) {
+    suspend fun deleteFavorite(seriesEntity: SeriesEntity) {
         seriesDao.deleteFavorites(seriesEntity)
     }
 }

@@ -39,7 +39,7 @@ data class DetailSeriesResponse(
 
     fun toDomain(): Series {
         return Series(
-            Constants.BASE_IMAGE_URL + backdropPath,
+            Constants.BASE_ORIGINAL_IMAGE_URL + backdropPath,
             firstAirDate,
             id,
             lastAirDate,
@@ -47,7 +47,7 @@ data class DetailSeriesResponse(
             numberOfEpisodes,
             overview,
             popularity,
-            Constants.BASE_IMAGE_URL + posterPath,
+            Constants.BASE_ORIGINAL_IMAGE_URL + posterPath,
             voteAverage
         )
     }

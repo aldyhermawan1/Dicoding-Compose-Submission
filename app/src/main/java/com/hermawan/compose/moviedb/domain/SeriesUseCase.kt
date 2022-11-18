@@ -10,8 +10,8 @@ interface SeriesUseCase {
     fun getDetail(id: Int): Flow<Resource<Series>>
     fun getSearch(query: String): Flow<Resource<List<Series>>>
 
-    fun getFavorites(): Flow<List<Series>>
-    fun isFavorite(id: Int): Flow<Boolean>
-    fun insertFavorite(series: Series)
-    fun deleteFavorite(series: Series)
+    suspend fun getFavorites(): Flow<List<Series>>
+    suspend fun isFavorite(id: Int): Flow<Boolean>
+    suspend fun insertFavorite(series: Series)
+    suspend fun deleteFavorite(series: Series)
 }

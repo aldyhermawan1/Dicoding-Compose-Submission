@@ -1,16 +1,16 @@
 package com.hermawan.compose.moviedb.data
 
-import android.os.Handler
-import android.os.Looper
 import com.hermawan.compose.moviedb.data.local.LocalDataSource
 import com.hermawan.compose.moviedb.data.remote.RemoteDataSource
 import com.hermawan.compose.moviedb.data.remote.api.ApiResponse
 import com.hermawan.compose.moviedb.data.remote.model.DetailSeriesResponse
 import com.hermawan.compose.moviedb.data.remote.model.SeriesResponse
 import com.hermawan.compose.moviedb.domain.model.Series
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class SeriesRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -53,27 +53,23 @@ class SeriesRepository(
         }.asFlow()
     }
 
-    override fun getFavorites(): Flow<List<Series>> {
-        return localDataSource.getFavorites().map {
+    override suspend fun getFavorites(): Flow<List<Series>> = withContext(Dispatchers.IO) {
+        localDataSource.getFavorites().map {
             it.map { entity ->
                 entity.toDomain()
             }
         }
     }
 
-    override fun isFavorite(id: Int): Flow<Boolean> {
-        return localDataSource.isFavorite(id).map { it }
+    override suspend fun isFavorite(id: Int): Flow<Boolean> = withContext(Dispatchers.IO) {
+        localDataSource.isFavorite(id).map { it }
     }
 
-    override fun insertFavorite(series: Series) {
-        Handler(Looper.getMainLooper()).post {
-            localDataSource.insertFavorite(series.toEntity())
-        }
+    override suspend fun insertFavorite(series: Series) = withContext(Dispatchers.IO) {
+        localDataSource.insertFavorite(series.toEntity())
     }
 
-    override fun deleteFavorite(series: Series) {
-        Handler(Looper.getMainLooper()).post {
-            localDataSource.deleteFavorite(series.toEntity())
-        }
+    override suspend fun deleteFavorite(series: Series) = withContext(Dispatchers.IO) {
+        localDataSource.deleteFavorite(series.toEntity())
     }
 }

@@ -31,12 +31,13 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PopularScreen(
+    modifier: Modifier = Modifier,
     viewModel: MainViewModel = koinViewModel(),
-    onNavigateDetail: (Int) -> Unit
+    onNavigateDetail: (Int) -> Unit,
 ) {
     val state by viewModel.series.observeAsState()
 
-    Column {
+    Column(modifier = modifier) {
         SearchBar(
             onSearch = {
                 if (it.isNotEmpty()) viewModel.getSearch(it) else viewModel.getPopular()

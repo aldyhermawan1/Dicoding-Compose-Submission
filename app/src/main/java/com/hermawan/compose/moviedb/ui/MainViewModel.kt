@@ -55,7 +55,7 @@ class MainViewModel(private val useCase: SeriesUseCase) : ViewModel() {
         }
     }
 
-    fun isFavorite(id: Int) {
+    fun checkFavorite(id: Int) {
         viewModelScope.launch {
             useCase.isFavorite(id).collect {
                 _isFavorite.value = it
@@ -64,10 +64,14 @@ class MainViewModel(private val useCase: SeriesUseCase) : ViewModel() {
     }
 
     fun insertFavorite(series: Series) {
-        useCase.insertFavorite(series)
+        viewModelScope.launch {
+            useCase.insertFavorite(series)
+        }
     }
 
     fun deleteFavorite(series: Series) {
-        useCase.deleteFavorite(series)
+        viewModelScope.launch {
+            useCase.deleteFavorite(series)
+        }
     }
 }

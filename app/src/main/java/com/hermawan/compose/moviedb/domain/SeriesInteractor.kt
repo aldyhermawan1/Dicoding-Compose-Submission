@@ -19,19 +19,19 @@ class SeriesInteractor(private val seriesRepository: ISeriesRepository) : Series
         return seriesRepository.getSeries(query)
     }
 
-    override fun getFavorites(): Flow<List<Series>> {
+    override suspend fun getFavorites(): Flow<List<Series>> {
         return seriesRepository.getFavorites()
     }
 
-    override fun isFavorite(id: Int): Flow<Boolean> {
+    override suspend fun isFavorite(id: Int): Flow<Boolean> {
         return seriesRepository.isFavorite(id)
     }
 
-    override fun insertFavorite(series: Series) {
+    override suspend fun insertFavorite(series: Series) {
         return seriesRepository.insertFavorite(series)
     }
 
-    override fun deleteFavorite(series: Series) {
+    override suspend fun deleteFavorite(series: Series) {
         return seriesRepository.deleteFavorite(series)
     }
 }
