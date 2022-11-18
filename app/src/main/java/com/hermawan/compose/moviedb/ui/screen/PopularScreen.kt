@@ -82,7 +82,7 @@ fun PopularContent(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier.testTag("PopularList")
     ) {
-        items(popularSeries) {
+        items(popularSeries, key = { it.id }) {
             SeriesItem(
                 seriesId = it.id,
                 posterPath = it.posterPath ?: "",

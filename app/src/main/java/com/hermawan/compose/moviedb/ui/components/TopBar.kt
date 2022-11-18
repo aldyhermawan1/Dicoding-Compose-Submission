@@ -62,7 +62,7 @@ fun TopBar(
 @Preview
 @Composable
 fun TopBarPreview() {
-    ComposeMovieDBTheme() {
+    ComposeMovieDBTheme {
         TopBar(isBackVisible = false, isAboutVisible = false, onBackClick = {}, onAboutClick = {})
     }
 }

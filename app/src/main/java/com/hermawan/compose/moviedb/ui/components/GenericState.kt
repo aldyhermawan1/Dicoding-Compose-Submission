@@ -48,7 +48,7 @@ fun GenericState(
 @Preview(showBackground = true)
 @Composable
 fun GenericStatePreview() {
-    ComposeMovieDBTheme() {
+    ComposeMovieDBTheme {
         GenericState(
             message = stringResource(id = R.string.message_empty_search),
             drawable = R.drawable.img_empty

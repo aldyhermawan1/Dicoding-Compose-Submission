@@ -58,7 +58,7 @@ fun FavoriteContent(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier.testTag("FavoriteList")
     ) {
-        items(favoriteSeries) {
+        items(favoriteSeries, key = { it.id }) {
             SeriesItem(
                 seriesId = it.id,
                 posterPath = it.posterPath ?: "",
